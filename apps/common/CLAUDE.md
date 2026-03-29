@@ -18,15 +18,48 @@
 
 ### Formatting and Linting
 
-- Use **Oxc** (`oxlint` + `oxc_formatter`) for all formatting and linting.
-- Run via `pnpm lint` and `pnpm format`.
-- Tradeoff: Oxc is not at full ESLint plugin parity. Some import-order and accessibility rules are unavailable. Acceptable — do not swap to ESLint to recover a missing rule without team discussion.
+Formatting and linting are configured **at the monorepo root** and run across every app and package in a single command. There is no per-app formatter config — one config, one pass, everything covered.
+
+```bash
+pnpm fmt        # formats all code files across the entire monorepo
+pnpm lint       # lints all code files across the entire monorepo
+pnpm lint:fix   # lints and auto-fixes where possible
+```
+
+- Config files (`.oxlintrc`, `oxc.config.json`) live at the repo root — do not create per-app copies.
+- `pnpm fmt` targets all `.ts`, `.tsx`, `.js`, `.jsx`, `.json` files under `apps/` and `packages/`.
+- Generated files (`packages/swag/src/`, `db/types/`) must be added to the formatter/linter ignore list — do not format generated code.
+
+```
+# .oxlintignore (at repo root)
+packages/swag/src/
+apps/api/src/db/types/
+**/node_modules/
+**/.next/
+**/.expo/
+```
+
+**Tool:** **Oxc** (`oxlint` + `oxc_formatter`) — Rust-based, runs the full monorepo in milliseconds.
+
+Tradeoff: not at full ESLint plugin parity. Some import-order and accessibility rules are unavailable. Do not swap to ESLint to recover a missing rule without team discussion.
 
 ### Pre-commit Hooks (Husky)
 
-- Husky runs formatter + lint check before every commit.
+Husky runs `pnpm fmt` and `pnpm lint` from the **repo root** before every commit — meaning it checks all staged files regardless of which app they belong to.
+
 - A commit that fails lint or formatting is blocked — fix the issue, do not use `--no-verify` to bypass.
-- If a hook is consistently failing on generated code, fix the generator config or add the path to the lint ignore list — do not disable the hook.
+- The hook only runs on staged files (via `lint-staged`) to keep commits fast — it does not reformat the entire codebase on every commit, only the files being committed.
+- If a hook consistently fails on generated code, add the path to `.oxlintignore` — do not disable the hook.
+
+```json
+// package.json (root) — lint-staged config
+{
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["oxlint --fix", "oxc_formatter --write"],
+    "*.json": ["oxc_formatter --write"]
+  }
+}
+```
 
 ---
 
@@ -49,15 +82,15 @@ docs/*        ← documentation only
 
 ### Commit Style
 
-| Type | When to use |
-|---|---|
-| `feat` | New feature or user-facing functionality |
-| `fix` | Bug fix |
-| `chore` | Maintenance — dependency updates, config, tooling |
-| `docs` | Documentation only changes |
-| `infra` | Infrastructure — Docker, CI/CD, deployment config |
-| `style` | Formatting, whitespace — no logic change |
-| `wip` | Work in progress — incomplete, not ready for review |
+| Type    | When to use                                         |
+| ------- | --------------------------------------------------- |
+| `feat`  | New feature or user-facing functionality            |
+| `fix`   | Bug fix                                             |
+| `chore` | Maintenance — dependency updates, config, tooling   |
+| `docs`  | Documentation only changes                          |
+| `infra` | Infrastructure — Docker, CI/CD, deployment config   |
+| `style` | Formatting, whitespace — no logic change            |
+| `wip`   | Work in progress — incomplete, not ready for review |
 
 ```
 feat: add user profile screen
@@ -70,9 +103,10 @@ wip: notifications screen (incomplete)
 ```
 
 **Rules:**
+
 - `wip` commits must never land on `main` — squash or reword before merging.
 - Subject line under 72 characters.
-- Use the commit body for *why*, not *what* — the diff shows what changed.
+- Use the commit body for _why_, not _what_ — the diff shows what changed.
 
 ---
 
@@ -91,6 +125,7 @@ wip: notifications screen (incomplete)
 Every PR gets an AI-generated comment summarising what changed and who committed it. The comment is **replaced** (not appended) on each new push — one comment per PR, always current.
 
 The changelog includes:
+
 - Changes grouped by commit type and author
 - Files / areas of the codebase affected
 - Any migrations added
