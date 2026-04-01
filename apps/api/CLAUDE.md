@@ -2,6 +2,8 @@
 
 > NestJS backend. Follow these rules in every file you touch in this app.
 
+> Last updated: 01 April 2026, 08:00 PM MYT
+
 ---
 
 ## Folder Structure

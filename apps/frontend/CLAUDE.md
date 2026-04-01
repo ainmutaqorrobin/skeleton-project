@@ -3,6 +3,8 @@
 > Applies to any React-based frontend in this monorepo — Expo / React Native and Next.js (App Router).
 > Where behaviour differs between frameworks, both are documented explicitly.
 
+> Last updated: 01 April 2026, 08:00 PM MYT
+
 ---
 
 ## Folder Structure

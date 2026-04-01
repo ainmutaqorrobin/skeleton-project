@@ -3,6 +3,8 @@
 > Project-wide rules that apply across every app and package in this monorepo.
 > When in doubt about a practice not covered in an app-specific CLAUDE.md, this file is the source of truth.
 
+> Last updated: 01 April 2026, 08:00 PM MYT
+
 ---
 
 ## TypeScript

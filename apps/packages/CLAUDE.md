@@ -1,7 +1,9 @@
 # Shared Packages — Claude Guidelines
 
-> Packages in this directory are consumed by both `apps/api` and `apps/mobile` (or `apps/web`).
+> Packages in this directory are consumed by both `apps/api` and `apps/frontend`.
 > They must never contain app-specific logic — only shared contracts, types, and schemas.
+
+> Last updated: 01 April 2026, 08:00 PM MYT
 
 ---
 
@@ -55,7 +57,7 @@ Contains Zod schemas and the `ErrorCode` enum shared between frontend and backen
 
 **What does not belong here:**
 - Schemas used only by the backend → keep them in `apps/api/src/`
-- Schemas used only by the frontend → keep them in `apps/mobile/` or `apps/web/`
+- Schemas used only by the frontend → keep them in `apps/frontend/`
 
 **ErrorCode enum — keep it in sync:**
 
