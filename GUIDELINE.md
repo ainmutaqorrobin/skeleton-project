@@ -72,10 +72,16 @@ If one of those files needs different content, change `.ai/rules/` and regenerat
 
 Run one of these only after editing `.ai/rules/`:
 
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\sync-agent-docs.ps1
+```
+
+macOS or Linux:
+
 ```bash
-powershell -ExecutionPolicy Bypass -File scripts/sync-agent-docs.ps1
-# or
-bash scripts/sync-agent-docs.sh
+bash ./scripts/sync-agent-docs.sh
 ```
 
 Do not run the sync script for normal code or doc changes that do not affect `.ai/rules/`.
