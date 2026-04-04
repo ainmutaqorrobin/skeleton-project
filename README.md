@@ -33,6 +33,8 @@ This is not a runnable application — it is a **blueprint skeleton**. It captur
 
 When starting a new project, clone this repo and fill in the source code. Human developer workflow lives in [GUIDELINE.md](GUIDELINE.md). The generated `AGENTS.md` and `CLAUDE.md` files tell Codex and Claude Code what rules apply for each layer, while `.ai/rules/` remains the shared source of truth. Human review freshness is tracked in [.ai/RULES_STATUS.md](.ai/RULES_STATUS.md).
 
+> Before changing this repository itself, read [GUIDELINE.md](GUIDELINE.md). It is the required contributor workflow for maintaining this skeleton repo.
+
 ---
 
 ## Monorepo Structure
@@ -210,67 +212,6 @@ Each layer has generated `AGENTS.md` and `CLAUDE.md` files with the same shared 
 | Cross-cutting practices | [apps/common/AGENTS.md](apps/common/AGENTS.md), [apps/common/CLAUDE.md](apps/common/CLAUDE.md) |
 
 For the full narrative development reference (tradeoffs, decision rationale, examples), see [TEMPLATE.md](TEMPLATE.md).
-
-To regenerate the instruction files after editing `.ai/rules/`:
-
-```bash
-powershell -ExecutionPolicy Bypass -File scripts/sync-agent-docs.ps1
-# or
-bash scripts/sync-agent-docs.sh
-```
-
-### What To Edit Where
-
-Edit app or package code here:
-
-- `apps/`
-- `packages/`
-
-Edit shared AI instruction rules here:
-
-- `.ai/rules/root.md`
-- `.ai/rules/api.md`
-- `.ai/rules/frontend.md`
-- `.ai/rules/common.md`
-- `.ai/rules/docker.md`
-- `.ai/rules/packages.md`
-
-These files are generated output. Do not edit them directly:
-
-- `AGENTS.md`
-- `CLAUDE.md`
-- `apps/*/AGENTS.md`
-- `apps/*/CLAUDE.md`
-
-These scripts regenerate the AI instruction files from `.ai/rules/`:
-
-- `scripts/sync-agent-docs.ps1`
-- `scripts/sync-agent-docs.sh`
-
-### When To Update AI Rules
-
-If you change implementation only:
-
-- Update the app or package code
-- Do not edit `.ai/rules/`
-- Do not re-run the sync script
-- Do not update `.ai/RULES_STATUS.md`
-
-If you change project rules, conventions, architecture guidance, or agent instructions:
-
-- Edit the matching file in `.ai/rules/`
-- Re-run the sync script
-- Update `.ai/RULES_STATUS.md` if the review was meaningful
-- Commit the source template and the generated `AGENTS.md` and `CLAUDE.md` files together
-
-Rule mapping:
-
-- Root repo rules: `.ai/rules/root.md`
-- API rules: `.ai/rules/api.md`
-- Frontend rules: `.ai/rules/frontend.md`
-- Common rules: `.ai/rules/common.md`
-- Docker rules: `.ai/rules/docker.md`
-- Shared package rules: `.ai/rules/packages.md`
 
 ---
 
