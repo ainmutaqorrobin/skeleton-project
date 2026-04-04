@@ -1,96 +1,119 @@
 # Developer Guideline
 
-> Last updated: 05 April 2026, 01:31 AM MYT
+> Last updated: 05 April 2026, 01:43 AM MYT
 
 ## Purpose
 
-This file is for human contributors. It collects the developer-facing rules for working in this monorepo skeleton without mixing them with the Claude/Codex instruction setup.
+This file is for contributors changing the `skeleton-project` repository itself. It explains how to update this template repo cleanly so future projects and future contributors inherit consistent rules and structure.
+
+## What This File Covers
+
+- Updating repository guidance
+- Updating AI instruction sources
+- Regenerating generated AI docs
+- Knowing which files should and should not be edited directly
+- Knowing what to include in a commit when the skeleton itself changes
+
+It does not repeat the full technical standards for apps. Those belong in the template content and AI rule sources.
+
+## Source Of Truth
+
+Use these locations intentionally:
+
+- Human-facing repo guidance:
+  - `README.md`
+  - `GUIDELINE.md`
+  - `TEMPLATE.md`
+- AI instruction source templates:
+  - `.ai/rules/`
+- Generated AI files:
+  - `AGENTS.md`
+  - `CLAUDE.md`
+  - `apps/*/AGENTS.md`
+  - `apps/*/CLAUDE.md`
 
 ## What To Edit
 
-Edit implementation here:
+If you are changing the skeleton's developer-facing documentation:
 
-- `apps/`
-- `packages/`
+- Edit `README.md`, `GUIDELINE.md`, and/or `TEMPLATE.md`
 
-Edit developer documentation here when project process changes:
+If you are changing guidance that Claude Code or Codex should follow:
 
-- `README.md`
-- `GUIDELINE.md`
-- `TEMPLATE.md`
+- Edit the matching file in `.ai/rules/`
+- Re-run the sync script
+- Commit the generated `AGENTS.md` and `CLAUDE.md` outputs together with the source template change
 
-Edit AI instruction rules only when agent guidance changes:
+If you are changing example/template content inside the skeleton:
 
-- `.ai/rules/`
+- Edit the relevant file under `apps/`, `packages/`, root docs, or config files
+- Update docs if the change alters expected contributor workflow
 
-Do not hand-edit generated AI files:
+## Do Not Edit These Directly
+
+These are generated from `.ai/rules/`:
 
 - `AGENTS.md`
 - `CLAUDE.md`
-- `apps/*/AGENTS.md`
-- `apps/*/CLAUDE.md`
+- `apps/api/AGENTS.md`
+- `apps/api/CLAUDE.md`
+- `apps/frontend/AGENTS.md`
+- `apps/frontend/CLAUDE.md`
+- `apps/common/AGENTS.md`
+- `apps/common/CLAUDE.md`
+- `apps/docker/AGENTS.md`
+- `apps/docker/CLAUDE.md`
+- `apps/packages/AGENTS.md`
+- `apps/packages/CLAUDE.md`
 
-## Core Monorepo Rules
+If one of those files needs different content, change `.ai/rules/` and regenerate.
 
-- Dependency flow is one-way: `apps/ -> packages/`
-- Packages build before apps
-- `main` must stay deployable
-- PRs only, no direct pushes to `main`
-- Use conventional commit types: `feat`, `fix`, `chore`, `docs`, `infra`, `style`
-- `wip` commits must not land on `main`
+## When To Run The Sync Script
 
-## Common Commands
+Run one of these only after editing `.ai/rules/`:
 
 ```bash
-pnpm dev
-pnpm fmt
-pnpm lint
-pnpm lint:fix
-pnpm tsc --noEmit
-pnpm test
-pnpm db:migrate
-pnpm db:codegen
-pnpm db:seed
-pnpm codegen
+powershell -ExecutionPolicy Bypass -File scripts/sync-agent-docs.ps1
+# or
+bash scripts/sync-agent-docs.sh
 ```
 
-## Architecture Contracts
+Do not run the sync script for normal code or doc changes that do not affect `.ai/rules/`.
 
-### API and frontend contract
+## Commit Checklist For Skeleton Changes
 
-- Backend DTO/controller changes must update `swagger-spec.json`
-- After contract changes, run `pnpm codegen`
-- Commit `swagger-spec.json` and `packages/swag/src/api.ts` in the same PR
-- Frontend should use the generated client, not handwritten API types
+Before committing changes to this repo, check the following:
 
-### Shared error contract
+- If you changed human docs, the related docs were updated consistently
+- If you changed `.ai/rules/`, the generated AI files were regenerated
+- If you changed repo workflow meaningfully, `.ai/RULES_STATUS.md` was updated when appropriate
+- Generated files were not hand-edited
+- The diff is intentional and not just tooling noise
 
-- Use `ErrorCode` from `packages/schemas/src/error-codes.ts`
-- Frontend logic must switch on `errorCode`, not message text
-- Add new error codes in the shared package first
+## Typical Change Scenarios
 
-### TypeScript
+If you update developer workflow wording:
 
-- Keep `strict: true`
-- No `any` unless there is a strong reason and explicit narrowing plan
-- No `@ts-ignore` without explanation
+- Edit `README.md`, `GUIDELINE.md`, or `TEMPLATE.md`
+- Do not regenerate AI files unless AI guidance also changed
 
-## Developer Workflow
+If you update AI behavior or tool-specific instructions:
 
-If you change implementation only:
+- Edit `.ai/rules/...`
+- Run the sync script
+- Commit both the source rule and generated outputs
 
-- Update app or package code
-- Run the relevant checks
-- Do not touch `.ai/rules/` unless the actual project guidance changed
+If you update both human workflow and AI workflow:
 
-If you change project conventions or architectural guidance:
+- Update the human docs
+- Update `.ai/rules/...`
+- Run the sync script
+- Update `.ai/RULES_STATUS.md` if the rules were meaningfully reviewed
 
-- Update `GUIDELINE.md`, `README.md`, or `TEMPLATE.md` as needed
-- If the AI assistants should follow that new guidance too, also update the matching `.ai/rules/*.md` file
-- Re-run `scripts/sync-agent-docs.ps1` or `scripts/sync-agent-docs.sh` after changing `.ai/rules/`
+## Related Files
 
-## AI Docs Relationship
-
-- `.ai/rules/` is the source of truth for AI-specific working instructions
-- `AGENTS.md` and `CLAUDE.md` are generated from `.ai/rules/`
-- Human review freshness for the AI rules is tracked in `.ai/RULES_STATUS.md`
+- `README.md`: high-level project overview
+- `GUIDELINE.md`: contributor workflow for maintaining this skeleton repo
+- `TEMPLATE.md`: broader narrative reference
+- `.ai/rules/`: source templates for AI instruction files
+- `.ai/RULES_STATUS.md`: human-tracked last review timestamp for AI rules
