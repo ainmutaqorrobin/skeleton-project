@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
-
 > NestJS backend. Follow these rules in every file you touch in this app.
 
 ---

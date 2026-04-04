@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
-
 > Packages in this directory are consumed by both `apps/api` and `apps/frontend`.
 > They must never contain app-specific logic - only shared contracts, types, and schemas.
 

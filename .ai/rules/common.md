@@ -1,9 +1,5 @@
-# CLAUDE.md
-
-This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
-
 > Project-wide rules that apply across every app and package in this monorepo.
-> When in doubt about a practice not covered in an app-specific `CLAUDE.md`, this file is the source of truth.
+> When in doubt about a practice not covered in an app-specific `{{DOC_NAME}}`, this file is the source of truth.
 
 ---
 

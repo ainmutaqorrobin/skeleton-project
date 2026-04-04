@@ -31,7 +31,7 @@ This is not a runnable application — it is a **blueprint skeleton**. It captur
 - Coding contracts that must be upheld across all apps
 - Git, CI/CD, Docker, and testing conventions
 
-When starting a new project, clone this repo and fill in the source code. The guidelines in each `CLAUDE.md` tell every developer (and AI assistant) exactly what the rules are for that layer.
+When starting a new project, clone this repo and fill in the source code. Human developer workflow lives in [GUIDELINE.md](GUIDELINE.md). The generated `AGENTS.md` and `CLAUDE.md` files tell Codex and Claude Code what rules apply for each layer, while `.ai/rules/` remains the shared source of truth. Human review freshness is tracked in [.ai/RULES_STATUS.md](.ai/RULES_STATUS.md).
 
 ---
 
@@ -48,7 +48,15 @@ skeleton-project/
 │   ├── swag/         ← Orval-generated TypeScript API client
 │   ├── schemas/      ← Shared Zod schemas + ErrorCode enum
 │   └── tsconfig/     ← Shared TypeScript base configs
-├── CLAUDE.md         ← AI assistant guidance (root)
+├── .ai/
+│   └── rules/        ← Shared source templates for AI instruction files
+├── GUIDELINE.md      ← Human developer workflow and project rules
+├── RULES_STATUS.md   ← Human-maintained last review timestamp for repo rules
+├── AGENTS.md         ← Generated instructions for Codex
+├── CLAUDE.md         ← Generated instructions for Claude Code
+├── scripts/
+│   ├── sync-agent-docs.ps1
+│   └── sync-agent-docs.sh
 └── TEMPLATE.md       ← Full narrative development reference
 ```
 
@@ -191,17 +199,78 @@ The backend always returns this exact error shape:
 
 ## Per-Layer Guidelines
 
-Each layer has a dedicated `CLAUDE.md` with detailed rules. Read the relevant file before touching that layer.
+Each layer has generated `AGENTS.md` and `CLAUDE.md` files with the same shared rules. Edit `.ai/rules/` and re-run the sync script instead of hand-editing the generated files.
 
 | Layer | Guidelines |
 |---|---|
-| NestJS API | [apps/api/CLAUDE.md](apps/api/CLAUDE.md) |
-| React Frontend (Next.js / Expo) | [apps/frontend/CLAUDE.md](apps/frontend/CLAUDE.md) |
-| Shared Packages | [apps/packages/CLAUDE.md](apps/packages/CLAUDE.md) |
-| Docker / Compose | [apps/docker/CLAUDE.md](apps/docker/CLAUDE.md) |
-| Cross-cutting practices | [apps/common/CLAUDE.md](apps/common/CLAUDE.md) |
+| NestJS API | [apps/api/AGENTS.md](apps/api/AGENTS.md), [apps/api/CLAUDE.md](apps/api/CLAUDE.md) |
+| React Frontend (Next.js / Expo) | [apps/frontend/AGENTS.md](apps/frontend/AGENTS.md), [apps/frontend/CLAUDE.md](apps/frontend/CLAUDE.md) |
+| Shared Packages | [apps/packages/AGENTS.md](apps/packages/AGENTS.md), [apps/packages/CLAUDE.md](apps/packages/CLAUDE.md) |
+| Docker / Compose | [apps/docker/AGENTS.md](apps/docker/AGENTS.md), [apps/docker/CLAUDE.md](apps/docker/CLAUDE.md) |
+| Cross-cutting practices | [apps/common/AGENTS.md](apps/common/AGENTS.md), [apps/common/CLAUDE.md](apps/common/CLAUDE.md) |
 
 For the full narrative development reference (tradeoffs, decision rationale, examples), see [TEMPLATE.md](TEMPLATE.md).
+
+To regenerate the instruction files after editing `.ai/rules/`:
+
+```bash
+powershell -ExecutionPolicy Bypass -File scripts/sync-agent-docs.ps1
+# or
+bash scripts/sync-agent-docs.sh
+```
+
+### What To Edit Where
+
+Edit app or package code here:
+
+- `apps/`
+- `packages/`
+
+Edit shared AI instruction rules here:
+
+- `.ai/rules/root.md`
+- `.ai/rules/api.md`
+- `.ai/rules/frontend.md`
+- `.ai/rules/common.md`
+- `.ai/rules/docker.md`
+- `.ai/rules/packages.md`
+
+These files are generated output. Do not edit them directly:
+
+- `AGENTS.md`
+- `CLAUDE.md`
+- `apps/*/AGENTS.md`
+- `apps/*/CLAUDE.md`
+
+These scripts regenerate the AI instruction files from `.ai/rules/`:
+
+- `scripts/sync-agent-docs.ps1`
+- `scripts/sync-agent-docs.sh`
+
+### When To Update AI Rules
+
+If you change implementation only:
+
+- Update the app or package code
+- Do not edit `.ai/rules/`
+- Do not re-run the sync script
+- Do not update `.ai/RULES_STATUS.md`
+
+If you change project rules, conventions, architecture guidance, or agent instructions:
+
+- Edit the matching file in `.ai/rules/`
+- Re-run the sync script
+- Update `.ai/RULES_STATUS.md` if the review was meaningful
+- Commit the source template and the generated `AGENTS.md` and `CLAUDE.md` files together
+
+Rule mapping:
+
+- Root repo rules: `.ai/rules/root.md`
+- API rules: `.ai/rules/api.md`
+- Frontend rules: `.ai/rules/frontend.md`
+- Common rules: `.ai/rules/common.md`
+- Docker rules: `.ai/rules/docker.md`
+- Shared package rules: `.ai/rules/packages.md`
 
 ---
 

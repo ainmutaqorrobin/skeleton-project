@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
-
 > Applies to any React-based frontend in this monorepo - Expo / React Native and Next.js (App Router).
 > Where behaviour differs between frameworks, both are documented explicitly.
 

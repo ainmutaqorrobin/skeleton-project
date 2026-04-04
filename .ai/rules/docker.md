@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
-
 > Covers all Docker and Docker Compose configuration for this project.
 > Docker configs live here. Never put environment-specific logic in the base compose file.
 

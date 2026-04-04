@@ -1,10 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
 This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
 
 ## What This Repository Is
 
-A **monorepo skeleton** for full-stack applications. It defines the architecture, tooling conventions, and coding standards for every app and package before any source code is written. Each subdirectory has its own `CLAUDE.md` with rules specific to that layer.
+A **monorepo skeleton** for full-stack applications. It defines the architecture, tooling conventions, and coding standards for every app and package before any source code is written. Each subdirectory has its own `AGENTS.md` with rules specific to that layer.
 
 ---
 
@@ -12,10 +12,10 @@ A **monorepo skeleton** for full-stack applications. It defines the architecture
 
 ```
 apps/
-  api/          <- NestJS backend (see apps/api/CLAUDE.md)
-  frontend/     <- React frontend - Next.js App Router or Expo Router (see apps/frontend/CLAUDE.md)
-  docker/       <- Docker Compose configs for all environments (see apps/docker/CLAUDE.md)
-  common/       <- Project-wide practices: TS, lint, git, CI/CD (see apps/common/CLAUDE.md)
+  api/          <- NestJS backend (see apps/api/AGENTS.md)
+  frontend/     <- React frontend - Next.js App Router or Expo Router (see apps/frontend/AGENTS.md)
+  docker/       <- Docker Compose configs for all environments (see apps/docker/AGENTS.md)
+  common/       <- Project-wide practices: TS, lint, git, CI/CD (see apps/common/AGENTS.md)
 packages/
   swag/         <- Orval-generated TypeScript API client from swagger-spec.json
   schemas/      <- Shared Zod schemas + ErrorCode enum (used by both api and frontend)
@@ -95,12 +95,12 @@ docker compose -f docker-compose.yml -f docker-compose.staging.yml up
 
 ## Per-Layer Guidelines
 
-Each layer has a dedicated `CLAUDE.md` with detailed rules. Read the relevant file before touching that layer:
+Each layer has a dedicated `AGENTS.md` with detailed rules. Read the relevant file before touching that layer:
 
 | Layer | File |
 |---|---|
-| NestJS API | `apps/api/CLAUDE.md` |
-| React Frontend (Next.js / Expo) | `apps/frontend/CLAUDE.md` |
-| Shared Packages | `apps/packages/CLAUDE.md` |
-| Docker / Compose | `apps/docker/CLAUDE.md` |
-| Cross-cutting practices | `apps/common/CLAUDE.md` |
+| NestJS API | `apps/api/AGENTS.md` |
+| React Frontend (Next.js / Expo) | `apps/frontend/AGENTS.md` |
+| Shared Packages | `apps/packages/AGENTS.md` |
+| Docker / Compose | `apps/docker/AGENTS.md` |
+| Cross-cutting practices | `apps/common/AGENTS.md` |

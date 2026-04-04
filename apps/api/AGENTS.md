@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 This file is generated from .ai/rules. Edit the source templates there, then run scripts/sync-agent-docs.ps1 or scripts/sync-agent-docs.sh.
 
