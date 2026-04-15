@@ -23,6 +23,7 @@ This file is generated from .ai/rules. Edit the source templates there, then run
 - No package may import from `apps/` - dependency flows one way: `apps/ -> packages/`.
 - Each package has its own `package.json` and `tsconfig.json` extending `packages/tsconfig/base.json`.
 - All packages are built before apps - define this dependency order in `turbo.json`.
+- Exported shared types, schemas, DTO-aligned fields, and client payload shapes stay `camelCase` at the field level; exported type, enum, and schema names use `PascalCase`.
 
 ---
 
@@ -54,6 +55,7 @@ Contains Zod schemas and the `ErrorCode` enum shared between frontend and backen
 - Zod schemas that are validated on both the client (react-hook-form) and the server (NestJS pipes or Server Actions)
 - The `ErrorCode` enum referenced in `GlobalExceptionFilter` (backend) and error handlers (frontend)
 - Shared constants (e.g. max file size, pagination limits) used in both apps
+- Shared schema fields must stay `camelCase` so backend DTOs, Swagger, Orval, and frontend consumers all align without renaming.
 
 **What does not belong here:**
 - Schemas used only by the backend -> keep them in `apps/api/src/`

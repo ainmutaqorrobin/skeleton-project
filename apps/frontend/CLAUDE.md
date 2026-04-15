@@ -29,6 +29,15 @@ lib/                  <- utility functions, constants, helpers
 
 ---
 
+## Naming
+
+- React components, screen components, types, interfaces, and stores use `PascalCase` names.
+- Hooks, utilities, service methods, props, local variables, and API-facing model fields use `camelCase`.
+- Route params and search params use `camelCase` names such as `userId`, `sortBy`, and `pageSize`, even when the path segment itself is `kebab-case`.
+- Do not introduce `snake_case` into frontend code except for environment variables, machine-readable constant values, or generated/database-facing types that must preserve an external contract.
+
+---
+
 ## State Management
 
 | State type | Tool |
