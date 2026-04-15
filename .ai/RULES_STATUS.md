@@ -1,6 +1,6 @@
 # Rules Status
 
-Last reviewed: 05 April 2026, 12:38 AM MYT
+Last reviewed: 15 April 2026, 07:41 PM MYT
 
 ## Scope
 
@@ -15,6 +15,7 @@ Last reviewed: 05 April 2026, 12:38 AM MYT
 
 - `.ai/rules/` is the source of truth for agent instruction content.
 - `AGENTS.md` and `CLAUDE.md` files are generated artifacts for Codex and Claude Code.
+- Naming convention guidance was reviewed and standardized across root, API, frontend, common, and package rules.
 - Update this file when the rule content is meaningfully reviewed, not every time the sync script runs.
 
 ## Review Guidance

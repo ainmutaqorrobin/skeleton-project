@@ -80,6 +80,15 @@ docker compose -f docker-compose.yml -f docker-compose.staging.yml up
 
 ---
 
+## Naming Conventions
+
+- Application code and API payloads use `camelCase`.
+- Database schema uses `snake_case`.
+- Public HTTP route paths use lowercase `kebab-case`.
+- See `apps/common/{{DOC_NAME}}` for the full naming matrix and boundary rules.
+
+---
+
 ## Workflow Rules
 
 - `main` is always deployable - PRs only, no direct pushes.

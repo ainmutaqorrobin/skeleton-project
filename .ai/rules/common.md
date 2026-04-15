@@ -12,6 +12,19 @@
 
 ---
 
+## Naming Conventions
+
+- Do not force one casing style across every layer. Match the naming style to the boundary instead of fighting the language, framework, or storage layer.
+- `PascalCase`: classes, DTOs, React components, types, interfaces, enums.
+- `camelCase`: variables, functions, hooks, props, DTO properties, JSON request/response fields, query parameter names, service methods.
+- `kebab-case`: lowercase static HTTP route segments.
+- `snake_case`: database tables, database columns, indexes, constraints, migration descriptions, database-facing identifiers.
+- `UPPER_SNAKE_CASE`: environment variables, machine-readable error codes, wire-level constant values.
+- Boolean names should read like predicates in every layer: `isActive` / `is_active`, `hasAcceptedTerms` / `has_accepted_terms`.
+- Keep `snake_case` inside the database boundary - do not leak raw DB column names into controllers, DTOs, services, or frontend models unless a mapping layer or generated type explicitly requires it.
+
+---
+
 ## Code Quality
 
 ### Formatting and Linting
