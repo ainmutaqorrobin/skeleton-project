@@ -2,6 +2,28 @@
 
 ---
 
+## Naming Conventions
+
+Use the naming style that fits the boundary instead of forcing one style across every layer:
+
+- `PascalCase` for classes, DTOs, React components, types, interfaces, and enums.
+- `camelCase` for variables, utility functions, hooks, props, DTO properties, JSON request/response fields, query parameter names, and service methods.
+- Lowercase `kebab-case` for static HTTP route segments such as `/user-roles` and `/password-reset-requests`.
+- `snake_case` for database tables, columns, indexes, constraints, migration descriptions, and other schema-level identifiers.
+- `UPPER_SNAKE_CASE` for environment variables, machine-readable error codes, and other wire-level constant values.
+
+**Boundary rule:** keep `snake_case` inside the database layer. Controllers, DTOs, Swagger docs, generated API clients, and frontend code should stay `camelCase` unless an external contract explicitly requires otherwise.
+
+**Examples:**
+- DTO classes: `CreateUserDto`, `UpdateUserDto`, `UserResponseDto`
+- DTO payload fields: `firstName`, `createdAt`, `isActive`
+- Utility functions: `formatCurrency`, `buildAuthHeaders`, `mapUserProfile`
+- Route params and query params: `/users/:userId`, `?sortBy=createdAt&pageSize=20`
+- DB schema: `users`, `user_roles`, `password_reset_requests`, `first_name`, `created_at`, `user_id`
+- Boolean names should read like predicates: `isActive` / `is_active`, `hasAcceptedTerms` / `has_accepted_terms`
+
+---
+
 ## Frontend
 
 ### 1) Folder Structure

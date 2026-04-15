@@ -2,7 +2,7 @@
 
 A **monorepo skeleton** for full-stack applications. This repository defines the architecture, tooling conventions, and coding standards for every layer before any source code is written — so every new project starts from a consistent, production-ready baseline.
 
-> Last updated: 02 April 2026, 12:33 AM MYT
+> Last updated: 15 April 2026, 07:41 PM MYT
 
 ---
 
@@ -16,6 +16,7 @@ A **monorepo skeleton** for full-stack applications. This repository defines the
 - [Architecture Contracts](#architecture-contracts)
   - [API ↔ Frontend via Swagger](#api--frontend-via-swagger)
   - [Shared Error Contract](#shared-error-contract)
+- [Naming Conventions](#naming-conventions)
 - [Per-Layer Guidelines](#per-layer-guidelines)
 - [Workflow Rules](#workflow-rules)
 - [CI/CD Pipeline](#cicd-pipeline)
@@ -196,6 +197,17 @@ The backend always returns this exact error shape:
 - `errorCode` comes from the shared `ErrorCode` enum in `packages/schemas/src/error-codes.ts`.
 - Frontend always switches on `errorCode` — never parses `message`.
 - Adding a new error code: update the enum first, then use it in both the backend filter and frontend handler.
+
+---
+
+## Naming Conventions
+
+- Application code and API payload fields use `camelCase`.
+- Classes, DTOs, React components, types, interfaces, and enums use `PascalCase`.
+- Public HTTP route paths use lowercase `kebab-case`, usually plural resource nouns such as `/user-roles`.
+- Database tables, columns, indexes, constraints, and migration descriptions use `snake_case`.
+- Environment variables and machine-readable constant values use `UPPER_SNAKE_CASE`.
+- Keep `snake_case` inside the database boundary so Nest DTOs, Swagger, Orval, and frontend code stay aligned in `camelCase`.
 
 ---
 
